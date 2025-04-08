@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vanilla JS Shopping Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    /* Styling for each item for sale */
+    .shop-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      display: inline-block;
+      vertical-align: top;
+      text-align: center;
+      width: 150px;
+    }
+    .shop-item img {
+      max-width: 100%;
+      height: auto;
+    }
+    /* Styling for the shopping cart summary */
+    #cart-summary {
+      border: 2px solid #444;
+      padding: 10px;
+      margin-top: 20px;
+      background-color: #f8f8f8;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 5px 0;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shopping Cart Demo</h1>
+  
+  <!-- Section where items for sale will be displayed -->
+  <div id="items"></div>
+  
+  <hr>
+  
+  <!-- Shopping Cart Summary -->
+  <div id="cart-summary">
+    <h2>Your Cart</h2>
+    <div id="cart-items">
+      <!-- Items in the cart will be dynamically injected here -->
+    </div>
+    <h3>Total: $<span id="total">0.00</span></h3>
+  </div>
+  
+  <script>
+    /* 
+      Items available for sale.
+      Each item has a unique id (here we use the name as the id), name, price, and an image.
+      Make sure to have the images in your project folder or update the image paths accordingly.
+    */
+    const itemsForSale = [
+      { id: "Apple", name: "Apple", price: 0.99, image: "apple.jpg" },
+      { id: "Banana", name: "Banana", price: 0.59, image: "banana.jpg" },
+      { id: "Cherry", name: "Cherry", price: 2.99, image: "cherry.jpg" }
+    ];
+
+    // The shopping cart is maintained as an object with item id keys.
+    // Each key holds an object with item details and a quantity.
+    let shoppingCart = {};
+
+    // Render items for sale on the page.
+    function renderItems() {
+      const itemsDiv = document.getElementById("items");
+      itemsDiv.innerHTML = ""; // Clear existing items
+      itemsForSale.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "shop-item";
+        itemDiv.innerHTML = `
+          <h3>${item.name}</h3>
+          <img src="${item.image}" alt="${item.name}"><br>
+          Price: $${item.price.toFixed(2)}<br>
+          <button onclick="addToCart('${item.id}')">Add to Cart</button>
+        `;
+        itemsDiv.appendChild(itemDiv);
+      });
+    }
+
+    // Render the shopping cart and update the total price.
+    function renderCart() {
+      const cartDiv = document.getElementById("cart-items");
+      cartDiv.innerHTML = ""; // Clear previous cart contents
+      let total = 0;
+      for (let id in shoppingCart) {
+        const cartItem = shoppingCart[id];
+        total += cartItem.price * cartItem.quantity;
+        // Create a div for each cart item
+        const cartItemDiv = document.createElement("div");
+        cartItemDiv.className = "cart-item";
+        cartItemDiv.innerHTML = `
+          ${cartItem.name} - $${cartItem.price.toFixed(2)} x ${cartItem.quantity}
+          <button onclick="removeFromCart('${id}')">Remove from Cart</button>
+        `;
+        cartDiv.appendChild(cartItemDiv);
+      }
+      document.getElementById("total").textContent = total.toFixed(2);
+    }
+
+    // Add an item to the shopping cart. If the item already exists, increase the quantity.
+    function addToCart(id) {
+      // Find the item in the itemsForSale array
+      const item = itemsForSale.find(product => product.id === id);
+      if (!item) return;
+
+      // Increase quantity if exists, otherwise add new item with quantity 1.
+      if (shoppingCart[id]) {
+        shoppingCart[id].quantity++;
+      } else {
+        shoppingCart[id] = { ...item, quantity: 1 };
+      }
+      renderCart();
+    }
+
+    // Remove an item from the shopping cart.
+    // Instead of removing it completely, decrease the quantity and remove the entry if quantity is 0.
+    function removeFromCart(id) {
+      if (shoppingCart[id]) {
+        shoppingCart[id].quantity--;
+        if (shoppingCart[id].quantity <= 0) {
+          delete shoppingCart[id];
+        }
+      }
+      renderCart();
+    }
+
+    // Initialize by rendering items for sale.
+    renderItems();
+  </script>
+</body>
+</html>
