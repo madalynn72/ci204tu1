@@ -1,0 +1,34 @@
+/* Global styles */
+html {
+  font-size: 10px; /* Sets the base font size to 10px for easier scaling */
+  font-family: "Open Sans", sans-serif; /* Replace with your chosen font family */
+}
+
+/* Heading 1 styles */
+h1 {
+  font-size: 60px; /* Sets the size of the h1 heading */
+  text-align: center; /* Centers the heading */
+}
+
+/* Heading 2 styles */
+h2 {
+  font-size: 40px;
+}
+
+/* Heading 3 styles */
+h3 {
+  font-size: 30px;
+}
+
+/* Heading 4 styles */
+h4 {
+  font-size: 20px;
+}
+
+/* Paragraph and list item styles */
+p,
+li {
+  font-size: 16px; /* Sets the font size of paragraphs and list items */
+  line-height: 2; /* Sets the line height to make text more readable */
+  letter-spacing: 1px; /* Adds a bit of space between letters */
+}
