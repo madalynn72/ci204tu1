@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Canvas Drawing Example</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="300"></canvas>
+
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Draw a filled rectangle
+    ctx.fillStyle = 'skyblue';
+    ctx.fillRect(10, 10, 100, 50);
+
+    // Draw a stroked rectangle
+    ctx.strokeStyle = 'blue';
+    ctx.strokeRect(130, 10, 100, 50);
+
+    // Draw a line
+    ctx.beginPath();
+    ctx.moveTo(10, 100);
+    ctx.lineTo(200, 100);
+    ctx.strokeStyle = 'green';
+    ctx.stroke();
+
+    // Draw a circle
+    ctx.beginPath();
+    ctx.arc(100, 180, 40, 0, Math.PI * 2);
+    ctx.fillStyle = 'orange';
+    ctx.fill();
+
+    // Draw text
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'black';
+    ctx.fillText('Hello Canvas!', 150, 180);
+
+    // Optional: load an image onto canvas
+    const img = new Image();
+    img.src = 'https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png';
+    img.onload = () => {
+      ctx.drawImage(img, 250, 200, 100, 80);
+    };
+  </script>
+</body>
+</html>
